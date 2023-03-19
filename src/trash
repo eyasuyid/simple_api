@@ -1,0 +1,35 @@
+const express = require('express');
+const {MongoClient} = require('mongodb');
+const app = express();
+const client = new MongoClient('mongodb://localhost:27017/files_manager');
+
+client.connect();
+const users = client.db().collection('users');
+
+const countUser = async () => {
+  console.log( await users.countDocuments());
+}
+
+countUser();
+
+// users.insertOne({'name': 'naol'})
+// users.updateOne({'name': 'naol'}, {$set: {'name': 'josh'}});
+// users.deleteOne({'name': 'josh'});
+
+express().get('/about', (req, res) => {
+  res.send('<h1>This about</h1>');
+});
+
+app.get('/home', (req, res) => {
+  res.send('This is home page');
+});
+
+const port = 5000;
+
+app.listen(5000, (err) => {
+  if (err !== undefined) {
+    console.log(`Error: ${err}`);
+  } else {
+    console.log('server listening on port 5000');
+  }
+});
